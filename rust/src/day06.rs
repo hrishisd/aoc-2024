@@ -21,8 +21,13 @@ fn main() {
             }
         }
     }
-    if let Route::PositionsVisited(n_positions) = walk(initial_guard_pos, Direction::UP, &obstacles)
-    {
+    let mut visited_part1 = [[EnumSet::empty(); N as usize]; N as usize];
+    if let Route::PositionsVisited(n_positions) = walk(
+        initial_guard_pos,
+        Direction::Up,
+        &obstacles,
+        &mut visited_part1,
+    ) {
         println!("part 1: {}", n_positions);
     } else {
         panic!("Got stuck while solving part 1");
@@ -31,13 +36,17 @@ fn main() {
     let mut n_obstructions = 0;
     for row in 0..N {
         for col in 0..N {
+            if visited_part1[row as usize][col as usize].is_empty() {
+                continue;
+            }
             let pos = GridPos { r: row, c: col };
             if obstacles.contains(pos) {
                 continue;
             }
             // try putting an obstacle here
             obstacles.insert(pos);
-            if let Route::Stuck = walk(initial_guard_pos, Direction::UP, &obstacles) {
+            let mut visited = [[EnumSet::empty(); N as usize]; N as usize];
+            if let Route::Stuck = walk(initial_guard_pos, Direction::Up, &obstacles, &mut visited) {
                 n_obstructions += 1;
             }
             obstacles.remove(pos);
@@ -51,9 +60,14 @@ enum Route {
     PositionsVisited(usize),
 }
 
-fn walk(mut pos: GridPos, mut dir: Direction, obstacles: &Obstacles) -> Route {
-    let mut visited: [[EnumSet<Direction>; N as usize]; N as usize] =
-        [[EnumSet::empty(); N as usize]; N as usize];
+fn walk(
+    mut pos: GridPos,
+    mut dir: Direction,
+    obstacles: &Obstacles,
+    visited: &mut [[EnumSet<Direction>; N as usize]; N as usize],
+) -> Route {
+    // let mut visited: [[EnumSet<Direction>; N as usize]; N as usize] =
+    //     [[EnumSet::empty(); N as usize]; N as usize];
     while let Some(next_pos) = pos.step(dir) {
         if visited[next_pos.r as usize][next_pos.c as usize].contains(dir) {
             return Route::Stuck;
@@ -100,25 +114,25 @@ struct GridPos {
 impl GridPos {
     fn step(self, dir: Direction) -> Option<GridPos> {
         let (row, col) = match dir {
-            Direction::UP => {
+            Direction::Up => {
                 if self.r == 0 {
                     return None;
                 }
                 (self.r - 1, self.c)
             }
-            Direction::DOWN => {
+            Direction::Down => {
                 if self.r == N - 1 {
                     return None;
                 }
                 (self.r + 1, self.c)
             }
-            Direction::LEFT => {
+            Direction::Left => {
                 if self.c == 0 {
                     return None;
                 }
                 (self.r, self.c - 1)
             }
-            Direction::RIGHT => {
+            Direction::Right => {
                 if self.c == N - 1 {
                     return None;
                 }
@@ -131,20 +145,20 @@ impl GridPos {
 
 #[derive(Debug, Hash, EnumSetType)]
 enum Direction {
-    UP,
-    DOWN,
-    LEFT,
-    RIGHT,
+    Up,
+    Down,
+    Left,
+    Right,
 }
 
 impl Direction {
     fn turn_right(self) -> Direction {
         use Direction::*;
         match self {
-            UP => RIGHT,
-            DOWN => LEFT,
-            LEFT => UP,
-            RIGHT => DOWN,
+            Up => Right,
+            Right => Down,
+            Down => Left,
+            Left => Up,
         }
     }
 }
@@ -162,7 +176,7 @@ const fn count_lines(s: &str) -> usize {
     }
 
     // If the string ends with a newline, don't count an extra line
-    if bytes.len() > 0 && bytes[bytes.len() - 1] == b'\n' {
+    if !bytes.is_empty() && bytes[bytes.len() - 1] == b'\n' {
         count -= 1;
     }
 
