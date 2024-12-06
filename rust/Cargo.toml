@@ -5,6 +5,7 @@ edition = "2024"
 
 [dependencies]
 fixedbitset = "0.5.7"
+num = "0.4.3"
 regex = "1.11.1"
 
 [[bin]]
@@ -26,3 +27,10 @@ path = "src/day04.rs"
 [[bin]]
 name = "day05"
 path = "src/day05.rs"
+
+[[bin]]
+name = "day06"
+path = "src/day06.rs"
+
+[profile.release]
+debug = true
