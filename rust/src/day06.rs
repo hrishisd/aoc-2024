@@ -2,7 +2,7 @@ use enumset::{EnumSet, EnumSetType};
 use fixedbitset::FixedBitSet;
 
 const INPUT: &str = include_str!("../../inputs/day06/input");
-const N: u8 = count_lines(INPUT) as u8;
+const N: u8 = aoc_rust::count_lines(INPUT) as u8;
 
 fn main() {
     let mut obstacles = Obstacles::new();
@@ -161,24 +161,4 @@ impl Direction {
             Left => Up,
         }
     }
-}
-
-const fn count_lines(s: &str) -> usize {
-    let mut count = 1;
-    let bytes = s.as_bytes();
-    let mut i = 0;
-
-    while i < bytes.len() {
-        if bytes[i] == b'\n' {
-            count += 1;
-        }
-        i += 1;
-    }
-
-    // If the string ends with a newline, don't count an extra line
-    if !bytes.is_empty() && bytes[bytes.len() - 1] == b'\n' {
-        count -= 1;
-    }
-
-    count
 }
