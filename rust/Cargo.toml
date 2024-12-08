@@ -1,5 +1,5 @@
 [package]
-name = "rust"
+name = "aoc-rust"
 version = "0.1.0"
 edition = "2024"
 
@@ -33,5 +33,10 @@ path = "src/day05.rs"
 name = "day06"
 path = "src/day06.rs"
 
-[profile.release]
-debug = true
+[[bin]]
+name = "day07"
+path = "src/day07.rs"
+
+[[bin]]
+name = "day08"
+path = "src/day08.rs"
