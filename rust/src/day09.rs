@@ -1,8 +1,10 @@
 use std::collections::VecDeque;
 
-static INPUT: [u8; 19_999] = parse_nums(*include_bytes!("../../inputs/day09/input"));
+static INPUT: [u8; 19_999] = parse_nums(*include_bytes!("../../inputs/day09/input-xin"));
 
 fn main() {
+    let total_disk_space: u64 = INPUT.iter().map(|i| *i as u64).sum();
+    println!("total size: {total_disk_space}");
     println!("part 1: {}", part1(&INPUT));
     println!("part 2: {}", part2(&INPUT));
 }

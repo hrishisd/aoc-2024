@@ -8,6 +8,7 @@ enumset = "1.1.5"
 fixedbitset = "0.5.7"
 num = "0.4.3"
 regex = "1.11.1"
+sscanf = "0.4.2"
 
 [[bin]]
 name = "day01"
@@ -44,3 +45,7 @@ path = "src/day08.rs"
 [[bin]]
 name = "day09"
 path = "src/day09.rs"
+
+[[bin]]
+name = "day13"
+path = "src/day13.rs"
