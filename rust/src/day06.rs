@@ -2,7 +2,7 @@ use enumset::{EnumSet, EnumSetType};
 use fixedbitset::FixedBitSet;
 
 const INPUT: &str = include_str!("../../inputs/day06/input");
-const N: u8 = aoc_rust::count_lines(INPUT) as u8;
+const N: u8 = aoc_rust::count_lines(INPUT.as_bytes()) as u8;
 
 fn main() {
     let mut obstacles = Obstacles::new();

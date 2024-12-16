@@ -1,7 +1,7 @@
 use std::collections::{HashMap, HashSet};
 
 const INPUT: &str = include_str!("../../inputs/day08/input");
-const N: usize = aoc_rust::count_lines(INPUT);
+const N: usize = aoc_rust::count_lines(INPUT.as_bytes());
 
 fn main() {
     let mut groups: HashMap<u8, Vec<(usize, usize)>> = HashMap::new();
