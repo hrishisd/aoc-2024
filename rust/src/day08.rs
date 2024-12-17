@@ -1,6 +1,6 @@
 use std::collections::{HashMap, HashSet};
 
-const INPUT: &str = include_str!("../../inputs/day08/input");
+static INPUT: &str = include_str!("../../inputs/day08/input");
 const N: usize = aoc_rust::count_lines(INPUT.as_bytes());
 
 fn main() {
@@ -12,7 +12,6 @@ fn main() {
             }
         }
     }
-    println!("N: {}", N);
     println!("part 1: {}", part1(&groups));
     println!("part 2: {}", part2(&groups));
 }
@@ -29,7 +28,7 @@ fn part1(groups: &HashMap<u8, Vec<(usize, usize)>>) -> usize {
                 let (rr, cc) = (rr as i64, cc as i64);
                 let (dr, dc) = (rr - r, cc - c);
                 let loc = (rr + dr, cc + dc);
-                if in_grid_signed::<N>(loc) {
+                if in_grid_signed(loc) {
                     locations.insert(loc);
                 }
             }
@@ -50,7 +49,7 @@ fn part2(groups: &HashMap<u8, Vec<(usize, usize)>>) -> usize {
                 let (rr, cc) = (rr as i64, cc as i64);
                 let (dr, dc) = (rr - r, cc - c);
                 let mut i = 0;
-                while in_grid_signed::<N>(((rr + dr * i), (cc + dc * i))) {
+                while in_grid_signed(((rr + dr * i), (cc + dc * i))) {
                     let loc = ((rr + dr * i), (cc + dc * i));
                     locations.insert(loc);
                     i += 1
@@ -61,7 +60,7 @@ fn part2(groups: &HashMap<u8, Vec<(usize, usize)>>) -> usize {
     locations.len()
 }
 
-const fn in_grid_signed<const N: usize>((row, col): (i64, i64)) -> bool {
+const fn in_grid_signed((row, col): (i64, i64)) -> bool {
     let n = N as i64;
     row >= 0 && col >= 0 && row < n && col < n
 }
