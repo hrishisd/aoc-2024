@@ -14,7 +14,7 @@ struct Equations {
 }
 
 fn main() {
-    let machines: Vec<Equations> = INPUT.split("\n\n").map(|block| parse_eq(block)).collect();
+    let machines: Vec<Equations> = INPUT.split("\n\n").map(parse_eq).collect();
     let part1: i64 = machines
         .iter()
         .filter_map(|machine| solve(*machine))
@@ -28,7 +28,7 @@ fn main() {
             y: sys.y + 10000000000000,
             ..*sys
         })
-        .filter_map(|machine| solve(machine))
+        .filter_map(solve)
         .map(|(a, b)| 3 * a + b)
         .sum();
     println!("part 2: {part2}");

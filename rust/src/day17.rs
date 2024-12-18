@@ -1,5 +1,5 @@
 #![feature(iter_intersperse)]
-use std::{collections::VecDeque, u64};
+use std::collections::VecDeque;
 const PROGRAM: [u8; 16] = [2, 4, 1, 1, 7, 5, 0, 3, 4, 3, 1, 6, 5, 5, 3, 0];
 
 fn main() {
@@ -28,7 +28,7 @@ const fn execute_n_times<const N: usize>(initial_a: u64) -> [u8; N] {
     let mut idx = 0;
     while idx < 16 {
         res[idx] = execute_one_pass(a);
-        a = a >> 3;
+        a >>= 3;
         idx += 1;
     }
     res
@@ -94,7 +94,7 @@ fn execute(initial_state: State, program: &[u8]) -> Vec<u8> {
         let combo = as_combo(operand, state);
         match opcode {
             0 => {
-                state.a = state.a >> combo;
+                state.a >>= combo;
             }
             1 => {
                 state.b ^= operand as u64;

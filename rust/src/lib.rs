@@ -1,3 +1,5 @@
+#![feature(const_for)]
+
 pub const fn count_lines(s: &[u8]) -> usize {
     if s.is_empty() {
         return 0;
@@ -26,4 +28,16 @@ fn test_count_lines() {
     assert_eq!(1, count_lines(b"asdfkljasdlkfjaslkjf"));
     assert_eq!(2, count_lines(b"line1\nline2"));
     assert_eq!(2, count_lines(b"line1\nline2\n"));
+}
+
+pub const fn count_matches(haystack: &[u8], needle: u8) -> usize {
+    let mut count = 0;
+    let mut idx = 0;
+    while idx < haystack.len() {
+        if haystack[idx] == needle {
+            count += 1;
+        }
+        idx += 1;
+    }
+    count
 }

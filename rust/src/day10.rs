@@ -6,7 +6,7 @@ use std::array;
 static INPUT: &str = include_str!("../../inputs/day10/input");
 const N: usize = aoc_rust::count_lines(INPUT.as_bytes());
 const GRID: [[u8; N]; N] = parse_grid();
-const N_PEAKS: usize = n_peaks();
+const N_PEAKS: usize = aoc_rust::count_matches(INPUT.as_bytes(), b'9');
 
 fn main() {
     println!("{}", part1());
@@ -98,22 +98,6 @@ const fn parse_grid() -> [[u8; N]; N] {
             idx += 1;
         }
         b_idx += 1;
-    }
-    res
-}
-
-const fn n_peaks() -> usize {
-    let mut res = 0;
-    let mut r = 0;
-    while r < N {
-        let mut c = 0;
-        while c < N {
-            if GRID[r][c] == 9 {
-                res += 1;
-            }
-            c += 1;
-        }
-        r += 1;
     }
     res
 }
