@@ -88,26 +88,6 @@ fn part1(mut robot: Pos, moves: &[Dir], grid: &mut [&mut [Cell]]) -> usize {
     score
 }
 
-fn print_grid(grid: &[&mut [Cell]], robot: Pos) {
-    for (r, row) in grid.iter().enumerate() {
-        println!(
-            "{}",
-            row.iter()
-                .enumerate()
-                .map(|(c, cell)| if robot.r == r && robot.c == c {
-                    '@'
-                } else {
-                    match cell {
-                        Cell::Box => 'O',
-                        Cell::Wall => '#',
-                        Cell::Empty => '.',
-                    }
-                })
-                .collect::<String>()
-        )
-    }
-}
-
 fn step(pos: Pos, dir: Dir, grid: &mut [&mut [Cell]]) -> Pos {
     assert_eq!(Cell::Empty, grid[pos.r][pos.c]);
     let next = pos.step(dir);
@@ -125,7 +105,7 @@ fn step(pos: Pos, dir: Dir, grid: &mut [&mut [Cell]]) -> Pos {
     }
 }
 
-fn scan_for_space(from_pos: Pos, dir: Dir, grid: &[&mut [Cell]]) -> Option<Pos> {
+const fn scan_for_space(from_pos: Pos, dir: Dir, grid: &[&mut [Cell]]) -> Option<Pos> {
     let mut p = from_pos;
     loop {
         match grid[p.r][p.c] {
@@ -137,7 +117,7 @@ fn scan_for_space(from_pos: Pos, dir: Dir, grid: &[&mut [Cell]]) -> Option<Pos> 
 }
 
 impl Pos {
-    fn step(self, m: Dir) -> Pos {
+    const fn step(self, m: Dir) -> Self {
         use Dir::*;
         match m {
             Up => Self {

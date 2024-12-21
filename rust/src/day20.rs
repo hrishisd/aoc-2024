@@ -63,7 +63,7 @@ fn main() {
     println!("{part2}");
 }
 
-fn improvement(old_dist: u16, new_dist: u16, step: u16) -> u16 {
+const fn improvement(old_dist: u16, new_dist: u16, step: u16) -> u16 {
     match old_dist.checked_sub(step) {
         Some(d) if d > new_dist => d - new_dist,
         _ => 0,
@@ -71,12 +71,12 @@ fn improvement(old_dist: u16, new_dist: u16, step: u16) -> u16 {
 }
 
 impl Pos {
-    fn idx(self) -> usize {
+    const fn idx(self) -> usize {
         self.r * N + self.c
     }
 
     /// Returns an iterator of all positions reachable by taking exactly N steps from the start position
-    fn n_steps(self, steps: isize) -> impl Iterator<Item = Pos> {
+    fn n_steps(self, steps: isize) -> impl Iterator<Item = Self> {
         // up, right, down, left, up
         [(1isize, 0isize), (0, 1), (-1, 0), (0, -1), (1, 0)]
             .array_windows::<2>()
@@ -87,7 +87,7 @@ impl Pos {
                         self.r.checked_add_signed(i * dr1 + j * dr2),
                         self.c.checked_add_signed(i * dc1 + j * dc2),
                     ) {
-                        (Some(r), Some(c)) if r < N && c < N => Some(Pos { r, c }),
+                        (Some(r), Some(c)) if r < N && c < N => Some(Self { r, c }),
                         _ => None,
                     }
                 })

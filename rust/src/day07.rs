@@ -40,7 +40,7 @@ fn can_make(want: u64, nums: &[u64], use_concat: bool) -> bool {
     can_make_rec(want, &nums[1..], nums[0], use_concat)
 }
 
-fn concat_digits(l: u64, r: u64) -> u64 {
+const fn concat_digits(l: u64, r: u64) -> u64 {
     let n_digits = r.ilog10() + 1;
     l * (10u64.pow(n_digits)) + r
 }

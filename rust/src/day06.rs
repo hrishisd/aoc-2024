@@ -91,17 +91,17 @@ impl Obstacles {
     fn new() -> Self {
         Self(FixedBitSet::with_capacity(N as usize * N as usize))
     }
-    fn to_idx(pos: GridPos) -> usize {
+    const fn to_idx(pos: GridPos) -> usize {
         pos.r as usize * N as usize + pos.c as usize
     }
     fn insert(&mut self, pos: GridPos) {
-        self.0.insert(Obstacles::to_idx(pos));
+        self.0.insert(Self::to_idx(pos));
     }
     fn contains(&self, pos: GridPos) -> bool {
-        self.0.contains(Obstacles::to_idx(pos))
+        self.0.contains(Self::to_idx(pos))
     }
     fn remove(&mut self, pos: GridPos) {
-        self.0.remove(Obstacles::to_idx(pos));
+        self.0.remove(Self::to_idx(pos));
     }
 }
 
@@ -112,7 +112,7 @@ struct GridPos {
 }
 
 impl GridPos {
-    fn step(self, dir: Direction) -> Option<GridPos> {
+    const fn step(self, dir: Direction) -> Option<Self> {
         let (row, col) = match dir {
             Direction::Up => {
                 if self.r == 0 {
@@ -139,7 +139,7 @@ impl GridPos {
                 (self.r, self.c + 1)
             }
         };
-        Some(GridPos { r: row, c: col })
+        Some(Self { r: row, c: col })
     }
 }
 
@@ -152,7 +152,7 @@ enum Direction {
 }
 
 impl Direction {
-    fn turn_right(self) -> Direction {
+    const fn turn_right(self) -> Direction {
         use Direction::*;
         match self {
             Up => Right,

@@ -112,41 +112,18 @@ enum Direction {
 }
 
 impl Direction {
-    fn step(self, r: usize, c: usize) -> Option<(usize, usize)> {
+    const fn step(self, r: usize, c: usize) -> Option<(usize, usize)> {
         match self {
-            Direction::Up => {
-                if r == 0 {
-                    None
-                } else {
-                    Some((r - 1, c))
-                }
-            }
-            Direction::Down => {
-                if r >= N - 1 {
-                    None
-                } else {
-                    Some((r + 1, c))
-                }
-            }
-            Direction::Left => {
-                if c == 0 {
-                    None
-                } else {
-                    Some((r, c - 1))
-                }
-            }
-            Direction::Right => {
-                if c >= N - 1 {
-                    None
-                } else {
-                    Some((r, c + 1))
-                }
-            }
+            Direction::Up if r > 0 => Some((r - 1, c)),
+            Direction::Down if r < N - 1 => Some((r + 1, c)),
+            Direction::Left if c > 0 => Some((r, c - 1)),
+            Direction::Right if c < N - 1 => Some((r, c + 1)),
+            _ => None,
         }
     }
 
     /// returns the two possible directions with 90 degree rotations
-    fn rotate(self) -> [Self; 2] {
+    const fn rotate(self) -> [Self; 2] {
         use Direction::*;
         match self {
             Up | Down => [Left, Right],
